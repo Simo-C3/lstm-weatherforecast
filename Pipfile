@@ -1,0 +1,23 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+torch = ">=1.1"
+torchvision = "*"
+numpy = "*"
+tqdm = "*"
+tensorboard = ">=1.14"
+pandas = "*"
+torchmetrics = "*"
+hydra-core = "*"
+coloredlogs = "*"
+scikit-learn = "*"
+optuna = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.10"
+python_full_version = "3.10.13"

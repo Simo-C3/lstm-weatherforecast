@@ -1,0 +1,55 @@
+model:
+  _target_: model.LSTMModel
+  batch_size: 32
+  input_size: 30
+  hidden_size: 218
+  output_size: 1
+  num_layers: 2
+  dropout: 0.45358014413994646
+
+train_dataloader:
+  _target_: dataloader.CustomDataLoader
+  filepath: 'data/DailyDelhiClimateTrain.csv'
+  batch_size: ${model.batch_size}
+  shuffle: True
+  num_workers: 4
+  validation_split: 0.2
+
+test_dataloader:
+  _target_: dataloader.CustomDataLoader
+  filepath: 'data/DailyDelhiClimateTest.csv'
+  batch_size: ${model.batch_size}
+  shuffle: False
+  num_workers: 4
+
+optimizer:
+  _target_: torch.optim.Adam
+  lr: 0.0003388582119857419
+  betas: [0.9, 0.999]
+  eps: 1.1595143972458335e-10
+  weight_decay: 1.357403679023669e-08
+  amsgrad: true
+
+loss:
+  _target_: torch.nn.MSELoss
+
+logger:
+  name: LSTM
+  level: debug
+  config_file: ./config/logging.yaml
+
+trainer:
+  _target_: trainer.Trainer
+  epochs: 1000
+  early_stop: 10
+  save_dir: outputs/lstm/
+  device: cuda
+
+test:
+  save_dir: outputs/lstm/
+  device: cuda
+
+data_dir: data/
+output_dir: results/bert/
+seed: 42
+gpu_ids: [0, 1, 2]
