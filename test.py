@@ -3,6 +3,7 @@ from logging import Logger
 import numpy as np
 import plotly.graph_objects as go
 import torch
+import torch.nn as nn
 from torch import Tensor
 from torch.nn.modules.loss import _Loss
 from torch.utils.data import DataLoader
@@ -58,7 +59,7 @@ def plot(
     fig.update_xaxes(
         title_text="年",
         dtick="M3",
-        tickformat="%Y/%mm",
+        tickformat="%Y/%m",
         # グリッドの設定
         gridcolor="lightgrey",
         gridwidth=1,
@@ -92,7 +93,7 @@ def plot(
 
 
 def test(
-    model: model.LSTMModel,
+    model: nn.Module,
     model_path: str,
     device: any,
     criterion: _Loss,

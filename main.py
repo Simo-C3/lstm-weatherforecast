@@ -28,7 +28,7 @@ def init_seed(seed: int) -> None:
 def init_train(
     cfg: Config,
     logger: logging.Logger,
-) -> tuple[nn.Module, optim.Optimizer, _Loss, logging.Logger, Trainer]:
+) -> tuple[nn.Module, optim.Optimizer, _Loss, Trainer]:
     model: nn.Module = hydra.utils.instantiate(config=cfg.model)
     train_dataloader: CustomDataLoader = hydra.utils.instantiate(
         config=cfg.train_dataloader
@@ -51,7 +51,7 @@ def init_train(
     return model, optimizer, criterion, trainer
 
 
-def init_test(cfg: Config) -> CustomDataLoader:
+def init_test(cfg: Config) -> tuple[nn.Module, _Loss, CustomDataLoader]:
     model: nn.Module = hydra.utils.instantiate(config=cfg.model)
     test_dataloader: CustomDataLoader = hydra.utils.instantiate(
         config=cfg.test_dataloader
@@ -73,7 +73,6 @@ def main(cfg: Config) -> None:
 
     if cfg.target == "test":
         model, criterion, test_dataloader = init_test(cfg)
-
         test(
             model=model,
             model_path=f"{cfg.test.save_dir}/best.pth",
@@ -87,20 +86,16 @@ def main(cfg: Config) -> None:
         model, _, criterion, trainer = init_train(cfg, logger)
 
         logger.info("Start training")
-
         result = trainer.train()
-
         if result is None:
             logger.error(f"Training failed")
             return
-
         logger.info("Training finished")
 
         logger.info(f"Best validation loss: {result['monitor_best']}")
         logger.info(f"Best model epoch: {result['epoch']}")
 
         model, criterion, test_dataloader = init_test(cfg)
-
         test(
             model=model,
             model_path=f"{cfg.test.save_dir}/best.pth",
