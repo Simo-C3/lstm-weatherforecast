@@ -48,7 +48,7 @@ def plot(
 
     fig.add_trace(
         go.Scatter(
-            x=dataset["date"],
+            x=dataset["date"][30:],
             y=total_output,
             name="predicted",
             mode="lines",
@@ -115,11 +115,13 @@ def test(
                 label: Tensor = label.to(device)
 
                 output: Tensor = model(data)
+
+                loss: Tensor = criterion(output, label)
+                test_loss += loss.item()
+
                 total_output = np.append(
                     total_output, torch.flatten(output.cpu()).numpy()
                 )
-                loss: Tensor = criterion(output, label)
-                test_loss += loss.item()
 
     logger.info(f"Test Loss: {test_loss / len(test_dataloader):.6f} ")
 
@@ -127,5 +129,7 @@ def test(
     logger.info(
         f"test_dataloader.dataset.data len: {len(test_dataloader.dataset.data)}"
     )
+
+    logger.info(f"Total Output: {total_output}")
 
     plot(test_dataloader.dataset.data, total_output)

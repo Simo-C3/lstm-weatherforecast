@@ -21,6 +21,7 @@ test_dataloader:
   batch_size: ${model.batch_size}
   shuffle: False
   num_workers: 4
+  validation_split: 0
 
 optimizer:
   _target_: torch.optim.Adam
