@@ -69,6 +69,7 @@ class Config:
     output_dir: str = ""
     seed: int = 0
     gpu_ids: list[int] = field(default_factory=lambda: [0])
+    target: str = "train"
 
     # 各パラメータの設定
     model: ModelConfig = ModelConfig()

@@ -15,6 +15,7 @@ hydra-core = "*"
 coloredlogs = "*"
 scikit-learn = "*"
 optuna = "*"
+plotly = "*"
 
 [dev-packages]
 

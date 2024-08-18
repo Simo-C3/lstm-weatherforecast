@@ -74,7 +74,7 @@ class Trainer(BaseTrainer):
             self.optimizer.step()  # パラメータ更新
             total_loss += loss.item()
 
-            self.logger.info(self._progress(batch_idx))
+            # self.logger.info(self._progress(batch_idx))
 
         return self.model, total_loss / len(self.train_dataloader)
 

@@ -39,14 +39,16 @@ class WeatherDataset(Dataset):
         self.normalize_features(self.data)
 
         # データの準備
-        for i in range(len(self.data) - 30):  # 最後から8日分は使用できないため除外
+        for i in range(len(self.data) - 30):
             feature_data = []
             for feature in self.features:
-                feature_data.append(self.data.loc[i : i + 29, feature].values)
+                feature_data.append(
+                    self.data.loc[i : i + 29, feature].values
+                )  # 過去30日分のデータを特徴量とする
             self.X.append(feature_data)
             self.y.append(
                 self.data.loc[i + 30, "meantemp"]
-            )  # 30日目のmeantempをラベルとして追加
+            )  # 次の日のmeantempをラベルとする
 
         print("Bounds for Outliers:", self.bounds)
         print("Min-Max Values for Normalization:", self.min_max_values)
