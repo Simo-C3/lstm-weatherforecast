@@ -65,8 +65,6 @@ class TestConfig:
 @dataclass
 class Config:
     # 共通設定
-    data_dir: str = ""
-    output_dir: str = ""
     seed: int = 0
     gpu_ids: list[int] = field(default_factory=lambda: [0])
     target: str = "train"

@@ -48,7 +48,7 @@ def plot(
 
     fig.add_trace(
         go.Scatter(
-            x=dataset["date"][30:],
+            x=dataset["date"][15:],
             y=total_output,
             name="predicted",
             mode="lines",

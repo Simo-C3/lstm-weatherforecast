@@ -38,16 +38,18 @@ class WeatherDataset(Dataset):
         # 特徴量の正規化
         self.normalize_features(self.data)
 
+        day = 15
+
         # データの準備
-        for i in range(len(self.data) - 30):
+        for i in range(len(self.data) - day):
             feature_data = []
             for feature in self.features:
                 feature_data.append(
-                    self.data.loc[i : i + 29, feature].values
+                    self.data.loc[i : i + day - 1, feature].values
                 )  # 過去30日分のデータを特徴量とする
             self.X.append(feature_data)
             self.y.append(
-                self.data.loc[i + 30, "meantemp"]
+                self.data.loc[i + day, "meantemp"]
             )  # 次の日のmeantempをラベルとする
 
         print("Bounds for Outliers:", self.bounds)
